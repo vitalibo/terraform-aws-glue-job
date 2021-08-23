@@ -1,0 +1,6 @@
+.idea/
+.DS_Store
+*.iml
+.tf_*
+.terraform/
+.terraform.lock.hcl
