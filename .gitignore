@@ -4,3 +4,4 @@
 .tf_*
 .terraform/
 .terraform.lock.hcl
+sandbox/
