@@ -28,11 +28,11 @@ resource "aws_glue_job" "this" {
   default_arguments = {
     "--job-language"                          = var.job_language
     "--class"                                 = var.class
-    "--extra-py-files"                        = join(",", var.extra_py_files)
-    "--extra-jars"                            = join(",", var.extra_jars)
+    "--extra-py-files"                        = length(var.extra_py_files) > 0 ? join(",", var.extra_py_files) : null
+    "--extra-jars"                            = length(var.extra_jars) > 0 ? join(",", var.extra_jars) : null
     "--user-jars-first"                       = var.user_jars_first
     "--use-postgres-driver"                   = var.use_postgres_driver
-    "--extra-files"                           = join(",", var.extra_files)
+    "--extra-files"                           = length(var.extra_files) > 0 ? join(",", var.extra_files) : null
     "--job-bookmark-option"                   = var.job_bookmark_option
     "--TempDir"                               = var.temp_dir
     "--enable-s3-parquet-optimized-committer" = var.enable_s3_parquet_optimized_committer
@@ -46,7 +46,7 @@ resource "aws_glue_job" "this" {
     "--continuous-log-conversionPattern"      = var.continuous_log_conversion_pattern
     "--enable-spark-ui"                       = var.enable_spark_ui
     "--spark-event-logs-path"                 = var.spark_event_logs_path
-    "--additional-python-modules"             = join(",", var.additional_python_modules)
+    "--additional-python-modules"             = length(var.additional_python_modules) > 0 ? join(",", var.additional_python_modules) : null
   }
 
   execution_property {
