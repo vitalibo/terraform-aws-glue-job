@@ -57,7 +57,7 @@ variable "max_concurrent_runs" {
 
 variable "glue_version" {
   type        = string
-  default     = "2.0"
+  default     = "3.0"
   description = "(Optional) The version of glue to use."
 }
 
