@@ -79,6 +79,12 @@ variable "role_arn" {
   description = "(Optional) The ARN of the IAM role associated with this job."
 }
 
+variable "create_role" {
+  type        = bool
+  default     = false
+  description = "(Optional) Create AWS IAM role associated with the job."
+}
+
 variable "timeout" {
   type        = number
   default     = 2880
@@ -237,7 +243,7 @@ variable "enable_rename_algorithm_v2" {
 
 variable "enable_glue_datacatalog" {
   type        = bool
-  default     = false
+  default     = true
   description = "(Optional) Enables you to use the AWS Glue Data Catalog as an Apache Spark Hive metastore."
 }
 

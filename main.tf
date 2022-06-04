@@ -8,13 +8,13 @@ locals {
 
 resource "aws_glue_job" "this" {
   name                   = local.full_name
-  role_arn               = length(var.role_arn) > 0 ? var.role_arn :  join("", aws_iam_role.role.*.arn)
+  role_arn               = var.create_role ? join("", aws_iam_role.role.*.arn) : var.role_arn
   connections            = var.connections
   description            = var.description
   glue_version           = var.glue_version
   max_retries            = var.max_retries
   timeout                = var.timeout
-  security_configuration = length(var.security_configuration) > 0 ? var.security_configuration : join("", aws_glue_security_configuration.sec_cfg.*.id)
+  security_configuration = var.create_security_configuration ? join("", aws_glue_security_configuration.sec_cfg.*.id) : var.security_configuration
   worker_type            = var.worker_type
   number_of_workers      = var.number_of_workers
   tags                   = local.tags
@@ -70,7 +70,7 @@ resource "aws_cloudwatch_log_group" "log_group" {
 
 resource "aws_glue_security_configuration" "sec_cfg" {
   count = var.create_security_configuration ? 1 : 0
-  name  = "${local.full_name}-sec-cfg"
+  name  = "${local.full_name}-sec-config"
 
   encryption_configuration {
     dynamic "cloudwatch_encryption" {
@@ -103,7 +103,7 @@ resource "aws_glue_security_configuration" "sec_cfg" {
 }
 
 resource "aws_iam_role" "role" {
-  count = length(var.role_arn) > 0 ? 0 : 1
+  count = var.create_role ? 1 : 0
   name  = "${local.full_name}-role"
   tags  = local.tags
 
